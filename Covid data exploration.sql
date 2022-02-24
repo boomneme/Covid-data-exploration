@@ -1,3 +1,5 @@
+--deth=table of covid deaths
+--vacc=table of covid vaccinations
 select * 
 from portfo..deth
 where continent is not null
@@ -12,7 +14,7 @@ from portfo..deth
 order by 1,2
 
 --total cases vs total deaths
---likelihodd of death in canada if infected
+--dethper=likelihood of death in canada if infected
 select location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as dethper 
 from portfo..deth
 where location like '%anad%' 
@@ -20,14 +22,14 @@ order by 1
 
 
 --total cases to population
---% of canadians that got covid 
+--infecper=percent of canadians that got covid 
 
 select location, date, total_cases, population, (total_cases/population)*100 as infecper 
 from portfo..deth
 where location like '%anad%' 
 order by 1
 
---View
+--View infecper=CanInfec
 Create view CanInfec as
 select location, date, total_cases, population, (total_cases/population)*100 as infecper 
 from portfo..deth
@@ -114,7 +116,8 @@ where D.continent is not null
 order by 2,3
 
 
---CTE
+--CTE use
+--dailyincrease=rolling total infections
 
 with trend (continent, location, date, population, new_vaccinations, dailyincrease)
 as 
